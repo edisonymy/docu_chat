@@ -13,7 +13,7 @@ from llama_index.indices.query.query_transform import DecomposeQueryTransform
 from llama_index.prompts.chat_prompts import CHAT_REFINE_PROMPT
 # from IPython.display import Markdown, display
 import warnings
-import chromadb
+# import chromadb
 from langchain.agents import Tool
 from langchain.chains.conversation.memory import ConversationBufferMemory
 from llama_index.langchain_helpers.memory_wrapper import GPTIndexChatMemory

@@ -11,7 +11,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 from llama_index.indices.query.query_transform import DecomposeQueryTransform
 from llama_index.prompts.chat_prompts import CHAT_REFINE_PROMPT
-from IPython.display import Markdown, display
+# from IPython.display import Markdown, display
 import warnings
 import chromadb
 from langchain.agents import Tool
@@ -96,13 +96,13 @@ class Agent():
                                 refine_template = REFINE_PROMPT,
                                 mode = mode, 
                                 verbose=False)
-        display(Markdown(f"<b>{response}</b>"))
+        # display(Markdown(f"<b>{response}</b>"))
         # print(response.get_formatted_sources())
         for i in range(len(response.source_nodes)):
             if response.source_nodes[i].extra_info:
                 self.sources.append(response.source_nodes[i])
                 print(f'Source {i}: {response.source_nodes[i].extra_info["filename"]}')
-                display(Markdown(f"{response.source_nodes[i].node.text}"))
+                # display(Markdown(f"{response.source_nodes[i].node.text}"))
         #     sources.append(response.source_nodes[i])
         return response
         

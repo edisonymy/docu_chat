@@ -45,8 +45,6 @@ def get_index(path = '../../papers/For_Imposter_Concept_Paper', save_index = Tru
     return index
 
 
-
-
 class Agent():
     def __init__(self, 
                  path,
@@ -130,6 +128,10 @@ if "generated" not in st.session_state:
 
 if "past" not in st.session_state:
     st.session_state["past"] = []
+
+openai_key = st.text_input("Please Enter your OpenAI API Key: ", key="openai_key")
+if openai_key:
+    os.environ['OPENAI_API_KEY'] = openai_key
 
 input_local_path = st.text_input("Please Enter the Path to Your Documents: ", key="input_document")
 

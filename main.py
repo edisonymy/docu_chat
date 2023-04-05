@@ -36,11 +36,11 @@ def get_index(path = '../../papers/For_Imposter_Concept_Paper', save_index = Tru
     llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.7, model_name="gpt-3.5-turbo", max_tokens = 600)) 
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor, chunk_size_limit = 1500) #, chunk_size_limit = 600
     if os.path.exists(path+'/index_simple_small_chunks.json'):
-        index = GPTSimpleVectorIndex.load_from_disk('index_simple_small_chunks.json', service_context = service_context)
+        index = GPTSimpleVectorIndex.load_from_disk(path+'/index_simple_small_chunks.json', service_context = service_context)
     else:
         index = GPTSimpleVectorIndex.from_documents(documents, service_context = service_context)
-    if save_index:
-        index.save_to_disk(path+'/index_simple_small_chunks.json')
+        if save_index:
+            index.save_to_disk(path+'/index_simple_small_chunks.json')
     
     return index
 
@@ -132,7 +132,7 @@ if "past" not in st.session_state:
 openai_key = st.text_input("Please Enter your OpenAI API Key: ", key="openai_key")
 if openai_key:
     os.environ['OPENAI_API_KEY'] = openai_key
-    print(os.environ['OPENAI_API_KEY'])
+    st.write(os.environ['OPENAI_API_KEY'])
 
 if openai_key:
     input_local_path = st.text_input("Please Enter the Path to Your Documents: ", key="input_document")

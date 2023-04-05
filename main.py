@@ -132,31 +132,33 @@ if "past" not in st.session_state:
 openai_key = st.text_input("Please Enter your OpenAI API Key: ", key="openai_key")
 if openai_key:
     os.environ['OPENAI_API_KEY'] = openai_key
+    print(os.environ['OPENAI_API_KEY'])
 
-input_local_path = st.text_input("Please Enter the Path to Your Documents: ", key="input_document")
+if openai_key:
+    input_local_path = st.text_input("Please Enter the Path to Your Documents: ", key="input_document")
 
-if input_local_path:
-    st.write(f'your local path is: {input_local_path}')
-    agent = Agent(input_local_path)
+    if input_local_path:
+        st.write(f'your local path is: {input_local_path}')
+        agent = Agent(input_local_path)
 
-    def get_text():
-        input_text = st.text_input("You: ", key="input")
-        return input_text
+        def get_text():
+            input_text = st.text_input("You: ", key="input")
+            return input_text
 
-    user_input = get_text()
+        user_input = get_text()
 
-    if user_input:
-        output = agent.ask_agent(user_input)
+        if user_input:
+            output = agent.ask_agent(user_input)
 
-        st.session_state.past.append(user_input)
-        st.session_state.generated.append(output)
+            st.session_state.past.append(user_input)
+            st.session_state.generated.append(output)
 
-    if st.session_state["generated"]:
+        if st.session_state["generated"]:
 
-        for i in range(len(st.session_state["generated"]) - 1, -1, -1):
-            message(st.session_state["generated"][i], key=str(i))
-            for k, source in enumerate(agent.sources):
-                message(f'Source {k}: ' + source.extra_info["filename"], key=str(f'source {i}_{k}'))
-                message(f'Source text: ' + source.node.text, key=str(f'source text {i}_{k}'))
-            message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
-            
+            for i in range(len(st.session_state["generated"]) - 1, -1, -1):
+                message(st.session_state["generated"][i], key=str(i))
+                for k, source in enumerate(agent.sources):
+                    message(f'Source {k}: ' + source.extra_info["filename"], key=str(f'source {i}_{k}'))
+                    message(f'Source text: ' + source.node.text, key=str(f'source text {i}_{k}'))
+                message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+                
